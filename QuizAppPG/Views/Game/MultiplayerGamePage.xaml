@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Game"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             x:Class="QuizAppPG.Views.Game.MultiplayerGamePage"
+             Title="{Binding Title}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}" Margin="15,10,15,5" Padding="15">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="{Binding CurrentQuestionNumber, StringFormat='Fråga {0} av {0}'}" 
+                       HorizontalOptions="Center" Style="{StaticResource LargeLabel}" />
+                <Label Text="{Binding CurrentPlayerUsername, StringFormat='Din Poäng: {0}'}" 
+                       HorizontalOptions="Center" Style="{StaticResource MediumLabel}" />
+                <CollectionView ItemsSource="{Binding Players}" HeightRequest="50" HorizontalOptions="Center" >
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:GameSessionPlayerDto">
+                            <Border BackgroundColor="{StaticResource Primary300}" 
+                                    StrokeShape="RoundRectangle 8" Padding="8,4">
+                                <Label Text="{Binding Username}" TextColor="{StaticResource Background100}" FontSize="12" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="15,5" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="15" VerticalOptions="CenterAndExpand">
+                <Label Text="{Binding CurrentQuestion.Text}" Style="{StaticResource LargeLabel}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+
+                <CollectionView ItemsSource="{Binding CurrentQuestion.Options}" SelectionMode="Single"
+                                SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"
+                                IsEnabled="{Binding IsAnswerSubmitted, Converter={StaticResource InvertBoolConverter}}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource Primary200}" StrokeShape="RoundRectangle 8" Padding="15" Margin="0,5">
+                                <RadioButton Content="{Binding .}" IsChecked="{Binding SelectedAnswer, Mode=TwoWay, Converter={StaticResource StringToBoolConverter}, ConverterParameter={Binding .}}" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
+        <VerticalStackLayout Grid.Row="2" Padding="20,0">
+            <Label Text="{Binding FeedbackMessage}" HorizontalOptions="Center" Margin="0,10" Style="{StaticResource MediumLabel}" />
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="20" Padding="20">
+            <Button Text="Skicka Svar" Command="{Binding SubmitAnswerCommand}" IsVisible="{Binding IsAnswerSubmitted, Converter={StaticResource InvertBoolConverter}}" />
+            <Button Text="Nästa Fråga" Command="{Binding RequestNextQuestionCommand}" IsVisible="{Binding IsAnswerSubmitted}" Style="{StaticResource SecondaryButton}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

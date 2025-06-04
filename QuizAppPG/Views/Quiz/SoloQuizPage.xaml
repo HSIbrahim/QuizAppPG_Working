@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Quiz"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             x:Class="QuizAppPG.Views.Quiz.SoloQuizPage"
+             Title="{Binding Title}">
+    <Grid RowDefinitions="Auto,*,Auto,Auto">
+        <Border Grid.Row="0" Style="{StaticResource CardStyle}" Margin="15,10,15,5" Padding="15">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="{Binding QuestionNumberDisplay, StringFormat='Fråga {0} av {0}'}" 
+                       HorizontalOptions="Center" Style="{StaticResource LargeLabel}" />
+                <Label Text="{Binding UserCurrentScore, StringFormat='Din Poäng: {0}'}" 
+                       HorizontalOptions="Center" Style="{StaticResource MediumLabel}" />
+            </VerticalStackLayout>
+        </Border>
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Margin="15,5" VerticalOptions="FillAndExpand">
+            <VerticalStackLayout Spacing="15" VerticalOptions="CenterAndExpand">
+                <Label Text="{Binding CurrentQuestion.Text}" Style="{StaticResource LargeLabel}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                <CollectionView ItemsSource="{Binding CurrentQuestion.Options}" SelectionMode="Single"
+                                SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"
+                                IsEnabled="{Binding IsAnswerSubmitted, Converter={StaticResource InvertBoolConverter}}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource Primary200}" StrokeShape="RoundRectangle 8" Padding="15" Margin="0,5">
+                                <RadioButton Content="{Binding .}" IsChecked="{Binding SelectedAnswer, Mode=TwoWay, Converter={StaticResource StringToBoolConverter}, ConverterParameter={Binding .}}" />
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
+        <VerticalStackLayout Grid.Row="2" Padding="20,0">
+            <Label Text="{Binding FeedbackMessage}" HorizontalOptions="Center" Margin="0,10" Style="{StaticResource MediumLabel}" />
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="3" HorizontalOptions="Center" Spacing="20" Padding="20">
+            <Button Text="Skicka Svar" Command="{Binding SubmitAnswerCommand}" IsVisible="{Binding IsAnswerSubmitted, Converter={StaticResource InvertBoolConverter}}" />
+            <Button Text="Nästa Fråga" Command="{Binding NextQuestionCommand}" IsVisible="{Binding ShowNextButton}" Style="{StaticResource SecondaryButton}" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Game"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             xmlns:utilities="clr-namespace:QuizAppPG.Utilities"
+             x:Class="QuizAppPG.Views.Game.CreateGamePage"
+             Title="{Binding Title}">
+    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="CenterAndExpand">
+        <Label Text="Skapa en ny spelsession" Style="{StaticResource HeaderLabel}" />
+        <Border Style="{StaticResource CardStyle}">
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Välj Kategori:" Style="{StaticResource MediumLabel}" />
+                <Picker ItemsSource="{Binding Categories}"
+                        SelectedItem="{Binding SelectedCategory}"
+                        ItemDisplayBinding="{Binding Name}"
+                        Title="Välj en quiz-kategori">
+                </Picker>
+                <Label Text="Välj Svårighetsgrad:" Style="{StaticResource MediumLabel}" Margin="0,15,0,0" />
+                <Picker ItemsSource="{Binding DifficultyLevels}"
+                        SelectedItem="{Binding SelectedDifficulty}"
+                        Title="Välj svårighetsgrad">
+                    <Picker.ItemDisplayBinding>
+                        <Binding Path="." Converter="{StaticResource DifficultyLevelConverter}" />
+                    </Picker.ItemDisplayBinding>
+                </Picker>
+                <Button Text="Skapa Spel" Command="{Binding CreateGameSessionCommand}" Margin="0,20,0,0" />
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Friend"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             x:Class="QuizAppPG.Views.Friend.AddFriendPage"
+             Title="{Binding Title}">
+    <VerticalStackLayout Padding="15">
+        <SearchBar Placeholder="Sök användare" Text="{Binding SearchText}"
+                   SearchCommand="{Binding SearchUsersCommand}"
+                   BackgroundColor="{StaticResource Primary200}"
+                   TextColor="{StaticResource Text100}"
+                   PlaceholderColor="{StaticResource Text200}"
+                   CancelButtonColor="{StaticResource Accent100}"/>
+        <CollectionView ItemsSource="{Binding SearchResults}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:UserProfileDto">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,5">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding Username}" Style="{StaticResource CollectionItemTitleLabel}" />
+                                <Label Text="{Binding TotalScore, StringFormat='Poäng: {0}'}" Style="{StaticResource CollectionItemDetailLabel}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="Lägg till" Style="{StaticResource CollectionItemActionButton}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:AddFriendViewModel}}, Path=SendFriendRequestCommand}"
+                                    CommandParameter="{Binding Username}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="Inga användare hittades." HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource Text200}" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

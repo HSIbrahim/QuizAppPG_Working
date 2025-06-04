@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Friend"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             x:Class="QuizAppPG.Views.Friend.FriendsPage"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Lägg till vän" Command="{Binding GoToAddFriendCommand}" />
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout Padding="15">
+        <Label Text="Mina Vänner" Style="{StaticResource LargeLabel}" Margin="0,10,0,5" />
+        <CollectionView ItemsSource="{Binding Friends}" SelectionMode="None" EmptyView="Du har inga vänner än.">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:FriendDto">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,5">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding Username}" Style="{StaticResource CollectionItemTitleLabel}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="Ta bort" Style="{StaticResource CollectionItemActionButton}" BackgroundColor="Red"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FriendsViewModel}}, Path=RemoveFriendCommand}"
+                                    CommandParameter="{Binding UserId}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Label Text="Väntande Förfrågningar" Style="{StaticResource LargeLabel}" Margin="0,20,0,5" />
+        <CollectionView ItemsSource="{Binding PendingRequests}" SelectionMode="None" EmptyView="Inga väntande förfrågningar.">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:FriendDto">
+                    <Border Style="{StaticResource CardStyle}" Margin="0,5">
+                        <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                                <Label Text="{Binding Username}" Style="{StaticResource CollectionItemTitleLabel}" />
+                            </VerticalStackLayout>
+                            <Button Grid.Column="1" Text="Acceptera" Style="{StaticResource CollectionItemActionButton}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FriendsViewModel}}, Path=AcceptFriendRequestCommand}"
+                                    CommandParameter="{Binding UserId}" />
+                            <Button Grid.Column="2" Text="Neka" Style="{StaticResource CollectionItemActionButton}" BackgroundColor="{StaticResource Primary300}" TextColor="{StaticResource Background100}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:FriendsViewModel}}, Path=RejectFriendRequestCommand}"
+                                    CommandParameter="{Binding UserId}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.User"
+             xmlns:models="clr-namespace:QuizAppPG.DTOs"
+             x:Class="QuizAppPG.Views.User.ProfilePage"
+             Title="{Binding Title}">
+    <VerticalStackLayout Padding="30" Spacing="25" VerticalOptions="CenterAndExpand" >
+        <Label Text="Min Profil" Style="{StaticResource HeaderLabel}" />
+
+        <Border Style="{StaticResource CardStyle}">
+            <VerticalStackLayout Spacing="15">
+                <Grid ColumnDefinitions="Auto,*">
+                    <Label Grid.Column="0" Text="Användarnamn:" Style="{StaticResource MediumLabel}" FontAttributes="Bold" />
+                    <Label Grid.Column="1" Text="{Binding UserProfile.Username}" Style="{StaticResource MediumLabel}" />
+
+                    <Label Grid.Row="1" Grid.Column="0" Text="E-post:" Style="{StaticResource MediumLabel}" FontAttributes="Bold" />
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding UserProfile.Email}" Style="{StaticResource MediumLabel}" />
+
+                    <Label Grid.Row="2" Grid.Column="0" Text="Total Poäng:" Style="{StaticResource MediumLabel}" FontAttributes="Bold" />
+                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding UserProfile.TotalScore}" Style="{StaticResource MediumLabel}" />
+                </Grid>
+
+                <Button Text="Redigera Profil" Command="{Binding GoToEditProfileCommand}" />
+                <Button Text="Ändra Lösenord" Command="{Binding GoToChangePasswordCommand}" Style="{StaticResource SecondaryButton}" />
+                <Button Text="Logga ut" Command="{Binding LogoutCommand}" BackgroundColor="Red" />
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentPage>

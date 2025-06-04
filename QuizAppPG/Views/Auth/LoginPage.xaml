@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels.Auth"
+             x:Class="QuizAppPG.Views.Auth.LoginPage"
+             Shell.NavBarIsVisible="False"
+             Title="{Binding Title}">
+    <ScrollView>
+        <Grid Padding="30" RowSpacing="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Välkommen till QuizApp" Style="{StaticResource Headline}" />
+            <Label Grid.Row="0" Text="Logga in för att fortsätta" TextColor="{StaticResource Text200}" HorizontalOptions="Center" />
+            <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Användarnamn" TextColor="{StaticResource Text100}" FontSize="14" />
+                    <Entry Placeholder="Skriv ditt användarnamn" Text="{Binding Username}" />
+                    <Label Text="Lösenord" TextColor="{StaticResource Text100}" FontSize="14" />
+                    <Entry Placeholder="Skriv ditt lösenord" IsPassword="True" Text="{Binding Password}" />
+                    <Button Text="Logga in" Command="{Binding LoginCommand}" />
+                    <Button Text="Registrera dig" Command="{Binding GoToRegisterCommand}" Style="{StaticResource SecondaryButton}" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>

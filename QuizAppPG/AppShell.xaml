@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="QuizAppPG.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.SegmentedControl;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:authViews="clr-namespace:QuizAppPG.Views.Auth"
+    xmlns:mainViews="clr-namespace:QuizAppPG.Views"
+    xmlns:userViews="clr-namespace:QuizAppPG.Views.User"
+    xmlns:friendViews="clr-namespace:QuizAppPG.Views.Friend"
+    xmlns:gameViews="clr-namespace:QuizAppPG.Views.Game"
+    xmlns:quizViews="clr-namespace:QuizAppPG.Views.Quiz"
+    xmlns:leaderboardViews="clr-namespace:QuizAppPG.Views.Leaderboard"
+    Shell.FlyoutBehavior="Disabled"
+    Title="QuizAppPG">
+    <ShellContent
+        Title="Login"
+        Shell.NavBarIsVisible="False"
+        ContentTemplate="{DataTemplate authViews:LoginPage}"
+        Route="LoginPage" />
+    <ShellContent
+        Title="Register"
+        Shell.NavBarIsVisible="True"
+        ContentTemplate="{DataTemplate authViews:RegisterPage}"
+        Route="RegisterPage" />
+    <FlyoutItem Title="Main" Route="MainApp">
+        <ShellContent
+            Title="Home"
+            Icon="home_icon.png" 
+            ContentTemplate="{DataTemplate mainViews:MainPage}"
+            Route="MainPage" />
+        <ShellContent
+            Title="Profile"
+            Icon="profile_icon.png"
+            ContentTemplate="{DataTemplate userViews:ProfilePage}"
+            Route="ProfilePage" />
+        <ShellContent
+            Title="Quiz Categories"
+            Icon="quiz_icon.png"
+            ContentTemplate="{DataTemplate quizViews:QuizCategoriesPage}"
+            Route="QuizCategoriesPage" />
+        <ShellContent
+            Title="Friends"
+            Icon="friends_icon.png"
+            ContentTemplate="{DataTemplate friendViews:FriendsPage}"
+            Route="FriendsPage" />
+        <ShellContent
+            Title="Leaderboard"
+            Icon="leaderboard_icon.png"
+            ContentTemplate="{DataTemplate leaderboardViews:LeaderboardPage}"
+            Route="LeaderboardPage" />
+    </FlyoutItem>
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="150" BackgroundColor="{StaticResource Primary}">
+                <Label Text="QuizAppPG" TextColor="White" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+    <Shell.FlyoutFooter>
+        <Grid Padding="15">
+            <sf:SfSegmentedControl x:Name="ThemeSegmentedControl" 
+                VerticalOptions="Center" HorizontalOptions="Center" SelectionChanged="SfSegmentedControl_SelectionChanged"
+                SegmentWidth="40" SegmentHeight="40">
+                <sf:SfSegmentedControl.ItemsSource>
+                    <x:Array Type="{x:Type sf:SfSegmentItem}">
+                        <sf:SfSegmentItem ImageSource="light_icon.png"/>
+                        <sf:SfSegmentItem ImageSource="dark_icon.png"/>
+                    </x:Array>
+                </sf:SfSegmentedControl.ItemsSource>
+            </sf:SfSegmentedControl>
+            <Button Text="Logout" 
+                    Command="{Binding LogoutCommand}"
+                    Margin="0,20,0,0" />
+        </Grid>
+    </Shell.FlyoutFooter>
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BasePageStyle" TargetType="ContentPage">
+                <Setter Property="Shell.NavBarIsVisible" Value="True" />
+                <Setter Property="Shell.PresentationMode" Value="Animated" />
+            </Style>
+            <Style TargetType="authViews:LoginPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="authViews:RegisterPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="mainViews:MainPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="userViews:ProfilePage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="userViews:EditProfilePage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="userViews:ChangePasswordPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="userViews:UserSearchPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="friendViews:FriendsPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="friendViews:AddFriendPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="gameViews:CreateGamePage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="gameViews:GameLobbyPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="gameViews:MultiplayerGamePage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="quizViews:QuizCategoriesPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="quizViews:SoloQuizPage" BasedOn="{StaticResource BasePageStyle}" />
+            <Style TargetType="leaderboardViews:LeaderboardPage" BasedOn="{StaticResource BasePageStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+</Shell>

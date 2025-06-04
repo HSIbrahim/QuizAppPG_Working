@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:QuizAppPG.ViewModels"
+             x:Class="QuizAppPG.Views.MainPage"
+             Title="{Binding Title}">
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="25">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="{Binding WelcomeMessage}" Style="{StaticResource HeaderLabel}" />
+            <Grid Grid.Row="1" VerticalOptions="Center" HorizontalOptions="Fill" RowSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Spela Quiz" Style="{StaticResource LargeLabel}" />
+                        <Button Text="Starta Solo Quiz" Command="{Binding GoToSoloQuizCommand}" />
+                        <Button Text="Skapa Multiplayer Spel" Command="{Binding GoToCreateGameCommand}" Style="{StaticResource SecondaryButton}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Gemenskap" Style="{StaticResource LargeLabel}" />
+                        <Button Text="Mina Vänner" Command="{Binding GoToFriendsCommand}" />
+                        <Button Text="Topplistor" Command="{Binding GoToLeaderboardCommand}" Style="{StaticResource SecondaryButton}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="2" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Min Profil" Style="{StaticResource LargeLabel}" />
+                        <Button Text="Se Profil" Command="{Binding GoToProfileCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollView>
+</ContentPage>

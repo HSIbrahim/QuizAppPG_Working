@@ -1,4 +1,4 @@
-﻿namespace QuizAppPG.DTOs // Namespace is DTOs
+﻿namespace QuizAppPG.DTOs
 {
     public class QuizCategoryDto
     {

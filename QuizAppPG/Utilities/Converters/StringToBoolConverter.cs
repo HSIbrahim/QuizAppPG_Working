@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using Microsoft.Maui.Controls; // For IValueConverter
 
 namespace QuizAppPG.Utilities.Converters
 {

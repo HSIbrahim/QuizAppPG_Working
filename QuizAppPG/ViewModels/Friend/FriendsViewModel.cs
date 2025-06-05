@@ -1,18 +1,11 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
 using QuizAppPG.Views.Friend;
 using System.Collections.ObjectModel;
-using System.Linq; // For LINQ operations
 
 namespace QuizAppPG.ViewModels.Friend
 {
     public partial class FriendsViewModel : BaseViewModel
     {
         private readonly IFriendApiService _friendApiService;
-        // _dialogService and _navigationService are inherited from BaseViewModel
 
         [ObservableProperty]
         private ObservableCollection<FriendDto> friends = new();
@@ -24,8 +17,8 @@ namespace QuizAppPG.ViewModels.Friend
             IFriendApiService friendApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService)
         {
             _friendApiService = friendApiService;
             Title = "Vänner";
@@ -39,7 +32,6 @@ namespace QuizAppPG.ViewModels.Friend
             IsBusy = true;
             try
             {
-                // Load Friends
                 var friendsResult = await _friendApiService.GetMyFriendsAsync();
                 if (friendsResult.IsSuccess && friendsResult.Data != null)
                 {
@@ -53,8 +45,6 @@ namespace QuizAppPG.ViewModels.Friend
                 {
                     await _dialogService.ShowAlertAsync("Fel", friendsResult.ErrorMessage ?? "Kunde inte ladda vänner.");
                 }
-
-                // Load Pending Requests
                 var pendingResult = await _friendApiService.GetPendingRequestsAsync();
                 if (pendingResult.IsSuccess && pendingResult.Data != null)
                 {
@@ -91,7 +81,7 @@ namespace QuizAppPG.ViewModels.Friend
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Accepterat", "Vänförfrågan accepterad.");
-                    await LoadFriendsAndRequestsAsync(); // Refresh lists
+                    await LoadFriendsAndRequestsAsync();
                 }
                 else
                 {
@@ -120,7 +110,7 @@ namespace QuizAppPG.ViewModels.Friend
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Nekat", "Vänförfrågan nekades.");
-                    await LoadFriendsAndRequestsAsync(); // Refresh lists
+                    await LoadFriendsAndRequestsAsync();
                 }
                 else
                 {
@@ -152,7 +142,7 @@ namespace QuizAppPG.ViewModels.Friend
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Borttagen", "Vän borttagen.");
-                    await LoadFriendsAndRequestsAsync(); // Refresh lists
+                    await LoadFriendsAndRequestsAsync();
                 }
                 else
                 {
@@ -174,12 +164,10 @@ namespace QuizAppPG.ViewModels.Friend
         {
             await _navigationService.GoToAsync(nameof(AddFriendPage));
         }
-
-        // OnAppearing from BaseViewModel (override is implied if virtual)
         public override void OnAppearing()
         {
-            base.OnAppearing(); // Call base implementation
-            _ = LoadFriendsAndRequestsAsync(); // Use `_ =` to suppress warning for unawaited Task
+            base.OnAppearing();
+            _ = LoadFriendsAndRequestsAsync();
         }
     }
 }

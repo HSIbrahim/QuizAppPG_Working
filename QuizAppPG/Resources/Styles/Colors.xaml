@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Your existing colors from the sample template -->
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="PrimaryDark">#ac99ea</Color>
     <Color x:Key="PrimaryDarkText">#242424</Color>
@@ -31,7 +30,6 @@
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
 
-    <!-- ADD THESE COLORS from your old Styles.xaml if you want to use them -->
     <Color x:Key="Primary100">#2C3E50</Color>
     <Color x:Key="Primary200">#57687c</Color>
     <Color x:Key="Primary300">#b4c7dd</Color>
@@ -43,7 +41,6 @@
     <Color x:Key="Background200">#2a3a43</Color>
     <Color x:Key="Background300">#42525c</Color>
 
-    <!-- Existing SolidColorBrush definitions... -->
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
     <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>

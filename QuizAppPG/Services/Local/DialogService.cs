@@ -1,7 +1,4 @@
-﻿// Services/Local/DialogService.cs
-using Microsoft.Maui.Controls; // For Keyboard, Application, Window
-
-namespace QuizAppPG.Services.Local
+﻿namespace QuizAppPG.Services.Local
 {
     public class DialogService : IDialogService
     {
@@ -33,7 +30,7 @@ namespace QuizAppPG.Services.Local
             {
                 return currentPage.DisplayPromptAsync(title, message, accept, cancel, placeholder, maxLength, keyboard);
             }
-            return Task.FromResult<string?>(null); // Corrected return type to nullable
+            return Task.FromResult<string?>(null);
         }
     }
 }

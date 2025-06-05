@@ -1,38 +1,31 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
-
 namespace QuizAppPG.ViewModels.User
 {
     public partial class EditProfileViewModel : BaseViewModel
     {
         private readonly IUserApiService _userApiService;
-        // _secureStorageService, _dialogService, _navigationService are inherited
 
         [ObservableProperty]
-        private string currentUsername = string.Empty; // Initialized
+        private string currentUsername = string.Empty;
 
         [ObservableProperty]
-        private string currentEmail = string.Empty; // Initialized
+        private string currentEmail = string.Empty;
 
         [ObservableProperty]
-        private string newUsername = string.Empty; // Initialized
+        private string newUsername = string.Empty;
 
         [ObservableProperty]
-        private string newEmail = string.Empty; // Initialized
+        private string newEmail = string.Empty;
 
         public EditProfileViewModel(
             IUserApiService userApiService,
-            ISecureStorageService secureStorageService, // <<< ADD THIS PARAMETER
+            ISecureStorageService secureStorageService,
             IDialogService dialogService,
             INavigationService navigationService)
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            : base(navigationService, dialogService, secureStorageService)
         {
             _userApiService = userApiService;
             Title = "Redigera Profil";
-            _ = LoadCurrentProfile(); // Use `_ =` to suppress warning for unawaited Task
+            _ = LoadCurrentProfile();
         }
 
         private async Task LoadCurrentProfile()
@@ -42,18 +35,18 @@ namespace QuizAppPG.ViewModels.User
             IsBusy = true;
             try
             {
-                var result = await _userApiService.GetUserProfileAsync(); // Get current user's profile
+                var result = await _userApiService.GetUserProfileAsync();
                 if (result.IsSuccess && result.Data != null)
                 {
                     CurrentUsername = result.Data.Username;
                     CurrentEmail = result.Data.Email;
-                    NewUsername = result.Data.Username; // Pre-fill with current values
+                    NewUsername = result.Data.Username;
                     NewEmail = result.Data.Email;
                 }
                 else
                 {
                     await _dialogService.ShowAlertAsync("Fel", result.ErrorMessage ?? "Kude inte ladda profil.");
-                    await _navigationService.PopAsync(); // Go back if profile can't be loaded
+                    await _navigationService.PopAsync();
                 }
             }
             catch (Exception ex)
@@ -75,14 +68,11 @@ namespace QuizAppPG.ViewModels.User
             IsBusy = true;
             try
             {
-                // Only send fields that have changed
                 var updateDto = new UpdateProfileDto
                 {
                     NewUsername = (NewUsername != CurrentUsername) ? NewUsername : null,
                     NewEmail = (NewEmail != CurrentEmail) ? NewEmail : null
                 };
-
-                // If nothing changed, just alert and return
                 if (string.IsNullOrWhiteSpace(updateDto.NewUsername) && string.IsNullOrWhiteSpace(updateDto.NewEmail))
                 {
                     await _dialogService.ShowAlertAsync("Inga ändringar", "Inga ändringar upptäcktes att spara.");
@@ -94,12 +84,11 @@ namespace QuizAppPG.ViewModels.User
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Framgång", "Profil uppdaterad framgångsrikt!");
-                    // Update locally stored username if it changed
                     if (!string.IsNullOrWhiteSpace(updateDto.NewUsername))
                     {
-                        await _secureStorageService.SaveUsernameAsync(updateDto.NewUsername); // Use inherited _secureStorageService
+                        await _secureStorageService.SaveUsernameAsync(updateDto.NewUsername);
                     }
-                    await _navigationService.PopAsync(); // Go back after successful update
+                    await _navigationService.PopAsync();
                 }
                 else
                 {

@@ -1,10 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
 using System.Collections.ObjectModel;
-using System.Linq; // For FirstOrDefault
 
 namespace QuizAppPG.ViewModels.User
 {
@@ -12,10 +6,9 @@ namespace QuizAppPG.ViewModels.User
     {
         private readonly IUserApiService _userApiService;
         private readonly IFriendApiService _friendApiService;
-        // _dialogService and _navigationService are inherited
 
         [ObservableProperty]
-        private string searchText = string.Empty; // Initialized
+        private string searchText = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<UserProfileDto> searchResults = new();
@@ -25,8 +18,8 @@ namespace QuizAppPG.ViewModels.User
             IFriendApiService friendApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService)
         {
             _userApiService = userApiService;
             _friendApiService = friendApiService;
@@ -39,7 +32,7 @@ namespace QuizAppPG.ViewModels.User
             if (IsBusy) return;
 
             IsBusy = true;
-            SearchResults.Clear(); // Clear previous results
+            SearchResults.Clear();
             try
             {
                 if (string.IsNullOrWhiteSpace(SearchText))
@@ -85,7 +78,6 @@ namespace QuizAppPG.ViewModels.User
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Vänförfrågan", $"Vänförfrågan skickades till {receiverUsername}.");
-                    // Optionally refresh search results or update UI to show request sent
                     var userInList = SearchResults.FirstOrDefault(u => u.Username == receiverUsername);
                     if (userInList != null)
                     {

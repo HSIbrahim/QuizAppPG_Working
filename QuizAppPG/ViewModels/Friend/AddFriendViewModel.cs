@@ -1,8 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
 using System.Collections.ObjectModel;
 
 namespace QuizAppPG.ViewModels.Friend
@@ -11,10 +6,9 @@ namespace QuizAppPG.ViewModels.Friend
     {
         private readonly IFriendApiService _friendApiService;
         private readonly IUserApiService _userApiService;
-        // _dialogService and _navigationService are inherited from BaseViewModel
 
         [ObservableProperty]
-        private string searchText = string.Empty; // Initialized to prevent CS8618
+        private string searchText = string.Empty;
 
         [ObservableProperty]
         private ObservableCollection<UserProfileDto> searchResults = new();
@@ -24,8 +18,8 @@ namespace QuizAppPG.ViewModels.Friend
             IUserApiService userApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService)
         {
             _friendApiService = friendApiService;
             _userApiService = userApiService;
@@ -84,12 +78,9 @@ namespace QuizAppPG.ViewModels.Friend
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Vänförfrågan", $"Vänförfrågan skickades till {receiverUsername}.");
-                    // Optionally refresh search results or remove the user from the list
                     var userInList = SearchResults.FirstOrDefault(u => u.Username == receiverUsername);
                     if (userInList != null)
                     {
-                        // You could add a flag to UserProfileDto like IsFriendRequestSent
-                        // For now, simply reloading search or removing from list might be too aggressive
                     }
                 }
                 else

@@ -1,8 +1,4 @@
-﻿using System; // For Guid
-using System.Collections.Generic;
-using QuizAppPG.Utilities; // Corrected: Points to Utilities for DifficultyLevel and QuestionType
-
-namespace QuizAppPG.DTOs // Namespace is DTOs
+﻿namespace QuizAppPG.DTOs 
 {
     public class QuestionDto
     {
@@ -12,14 +8,14 @@ namespace QuizAppPG.DTOs // Namespace is DTOs
         public DifficultyLevel Difficulty { get; set; }
         public QuestionType Type { get; set; }
         public int QuizCategoryId { get; set; }
-        public string CorrectAnswer { get; set; } = string.Empty; // Added CorrectAnswer for solo quiz feedback (if backend sends it)
+        public string CorrectAnswer { get; set; } = string.Empty;
     }
 
     public class SubmitAnswerDto
     {
         public int QuestionId { get; set; }
         public string SubmittedAnswer { get; set; } = string.Empty;
-        public Guid GameSessionId { get; set; } // If it's an online session
+        public Guid GameSessionId { get; set; } 
     }
 
     public class AnswerResultDto

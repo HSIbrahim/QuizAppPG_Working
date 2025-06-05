@@ -1,31 +1,24 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
-
 namespace QuizAppPG.ViewModels.User
 {
     public partial class ChangePasswordViewModel : BaseViewModel
     {
         private readonly IUserApiService _userApiService;
-        // _dialogService and _navigationService are inherited
 
         [ObservableProperty]
-        private string currentPassword = string.Empty; // Initialized
+        private string currentPassword = string.Empty;
 
         [ObservableProperty]
-        private string newPassword = string.Empty; // Initialized
+        private string newPassword = string.Empty;
 
         [ObservableProperty]
-        private string confirmNewPassword = string.Empty; // Initialized
+        private string confirmNewPassword = string.Empty; 
 
         public ChangePasswordViewModel(
             IUserApiService userApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService)
         {
             _userApiService = userApiService;
             Title = "Ändra Lösenord";
@@ -69,7 +62,7 @@ namespace QuizAppPG.ViewModels.User
                 if (result.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Framgång", "Lösenord ändrat framgångsrikt!");
-                    await _navigationService.PopAsync(); // Go back after successful change
+                    await _navigationService.PopAsync();
                 }
                 else
                 {

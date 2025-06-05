@@ -1,8 +1,8 @@
-﻿namespace QuizAppPG.Utilities // Changed QuizAppFrontend to QuizAppPG
+﻿namespace QuizAppPG.Utilities
 {
     public static class ServiceHelper
     {
-        public static IServiceProvider? Services { get; internal set; } // Made nullable
+        public static IServiceProvider? Services { get; internal set; }
 
         public static TService GetService<TService>()
             where TService : class

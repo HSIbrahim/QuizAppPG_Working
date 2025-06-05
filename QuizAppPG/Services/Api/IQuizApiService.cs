@@ -1,8 +1,4 @@
-﻿using QuizAppPG.DTOs; // Corrected namespace: QuizCategoryDto, QuestionDto, AnswerResultDto, SubmitAnswerDto, ServiceResult
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace QuizAppPG.Services.Api
+﻿namespace QuizAppPG.Services.Api
 {
     public interface IQuizApiService
     {

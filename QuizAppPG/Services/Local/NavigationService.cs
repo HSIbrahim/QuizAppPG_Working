@@ -19,12 +19,7 @@
 
         public Task PopToRootAsync(bool animate = true)
         {
-            // This is a common way to pop to root using Shell.
-            // Shell.Current.GoToAsync("//MainPage"); // Example if MainPage is a tab root
-            // Or use an absolute path for specific root if needed
-            // For general pop to root, navigate to the route leading to the root most directly.
-            // Simplified: pop until current stack is empty or desired root is reached.
-            return Shell.Current.GoToAsync("///MainPage", animate); // Adjust "MainPage" to your actual root page route
+            return Shell.Current.GoToAsync("///MainPage", animate);
         }
     }
 }

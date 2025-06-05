@@ -1,17 +1,12 @@
-﻿using System.Windows.Input; // For ICommand
+﻿using System.Windows.Input;
 
-namespace QuizAppPG.Utilities.Commands // Changed QuizAppFrontend to QuizAppPG
+namespace QuizAppPG.Utilities.Commands
 {
-    // This is a basic implementation of an async command.
-    // In most cases, if you use CommunityToolkit.Mvvm,
-    // [RelayCommand] on an async Task method will suffice.
     public class AsyncCommand : ICommand
     {
         private readonly Func<Task> _execute;
-        private readonly Func<bool>? _canExecute; // Made nullable
+        private readonly Func<bool>? _canExecute;
         private bool _isExecuting;
-
-        // Marked as nullable to match ICommand's definition
         public event EventHandler? CanExecuteChanged;
 
         public AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null)
@@ -20,12 +15,12 @@ namespace QuizAppPG.Utilities.Commands // Changed QuizAppFrontend to QuizAppPG
             _canExecute = canExecute;
         }
 
-        public bool CanExecute(object? parameter) // Made parameter nullable
+        public bool CanExecute(object? parameter)
         {
             return !_isExecuting && (_canExecute?.Invoke() ?? true);
         }
 
-        public async void Execute(object? parameter) // Made parameter nullable
+        public async void Execute(object? parameter)
         {
             if (CanExecute(parameter))
             {

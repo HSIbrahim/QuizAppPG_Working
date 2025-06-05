@@ -1,6 +1,4 @@
-﻿using QuizAppPG.DTOs; // Corrected namespace: FriendRequestDto, FriendDto, ServiceResult
-
-namespace QuizAppPG.Services.Api
+﻿namespace QuizAppPG.Services.Api
 {
     public interface IFriendApiService
     {

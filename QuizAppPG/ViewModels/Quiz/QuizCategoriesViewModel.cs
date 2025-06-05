@@ -1,29 +1,20 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
-using QuizAppPG.Utilities; // For DifficultyLevel enum
 using QuizAppPG.Views.Quiz;
 using System.Collections.ObjectModel;
-using System.Linq; // For Cast<T>
 
 namespace QuizAppPG.ViewModels.Quiz
 {
     public partial class QuizCategoriesViewModel : BaseViewModel
     {
         private readonly IQuizApiService _quizApiService;
-        // _dialogService and _navigationService are inherited
 
         [ObservableProperty]
         private ObservableCollection<QuizCategoryDto> categories = new();
 
         [ObservableProperty]
-        private QuizCategoryDto? selectedCategory; // Made nullable
+        private QuizCategoryDto? selectedCategory;
 
         [ObservableProperty]
-        private DifficultyLevel selectedDifficulty = DifficultyLevel.Easy; // Default
-
+        private DifficultyLevel selectedDifficulty = DifficultyLevel.Easy;
         public ObservableCollection<DifficultyLevel> DifficultyLevels { get; } = new(Enum.GetValues(typeof(DifficultyLevel)).Cast<DifficultyLevel>());
 
 
@@ -31,12 +22,12 @@ namespace QuizAppPG.ViewModels.Quiz
             IQuizApiService quizApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService)
         {
             _quizApiService = quizApiService;
             Title = "Välj Kategori";
-            _ = LoadCategoriesAsync(); // Load categories on init. Use `_ =` to suppress warning.
+            _ = LoadCategoriesAsync();
         }
 
         private async Task LoadCategoriesAsync()

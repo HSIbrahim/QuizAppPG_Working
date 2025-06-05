@@ -1,7 +1,4 @@
-﻿// Services/Local/SecureStorageService.cs
-using Microsoft.Maui.Storage; // For SecureStorage
-
-namespace QuizAppPG.Services.Local
+﻿namespace QuizAppPG.Services.Local
 {
     public class SecureStorageService : ISecureStorageService
     {
@@ -10,15 +7,15 @@ namespace QuizAppPG.Services.Local
         private const string UsernameKey = "username";
 
         public async Task SaveTokenAsync(string token) => await SecureStorage.SetAsync(AuthTokenKey, token);
-        public async Task<string?> GetTokenAsync() => await SecureStorage.GetAsync(AuthTokenKey); // Should already be nullable
+        public async Task<string?> GetTokenAsync() => await SecureStorage.GetAsync(AuthTokenKey);
         public void RemoveToken() => SecureStorage.Remove(AuthTokenKey);
 
         public async Task SaveUserIdAsync(string userId) => await SecureStorage.SetAsync(UserIdKey, userId);
-        public async Task<string?> GetUserIdAsync() => await SecureStorage.GetAsync(UserIdKey); // Corrected return type to nullable
+        public async Task<string?> GetUserIdAsync() => await SecureStorage.GetAsync(UserIdKey);
         public void RemoveUserId() => SecureStorage.Remove(UserIdKey);
 
         public async Task SaveUsernameAsync(string username) => await SecureStorage.SetAsync(UsernameKey, username);
-        public async Task<string?> GetUsernameAsync() => await SecureStorage.GetAsync(UsernameKey); // Corrected return type to nullable
+        public async Task<string?> GetUsernameAsync() => await SecureStorage.GetAsync(UsernameKey);
         public void ClearAll()
         {
             SecureStorage.Remove(AuthTokenKey);

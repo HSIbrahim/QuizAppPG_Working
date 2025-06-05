@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations; // Added
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizAppPG.DTOs // Namespace is DTOs
+namespace QuizAppPG.DTOs
 {
     public class RegisterDto
     {

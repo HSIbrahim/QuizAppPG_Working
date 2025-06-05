@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using QuizAppPG.Utilities; // Corrected: Points to Utilities for DifficultyLevel
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizAppPG.DTOs // Namespace is DTOs
+namespace QuizAppPG.DTOs
 {
     public class CreateGameSessionDto
     {
         [Range(1, int.MaxValue, ErrorMessage = "Välj en giltig kategori.")]
         public int QuizCategoryId { get; set; }
 
-        public DifficultyLevel Difficulty { get; set; } // Now correctly resolved from QuizAppPG.Utilities
+        public DifficultyLevel Difficulty { get; set; }
     }
 
     public class GameSessionDetailsDto
@@ -19,7 +16,7 @@ namespace QuizAppPG.DTOs // Namespace is DTOs
         public string HostUsername { get; set; } = string.Empty;
         public int QuizCategoryId { get; set; }
         public string CategoryName { get; set; } = string.Empty;
-        public DifficultyLevel Difficulty { get; set; } // Now correctly resolved from QuizAppPG.Utilities
+        public DifficultyLevel Difficulty { get; set; } 
         public DateTime StartTime { get; set; }
         public bool IsActive { get; set; }
         public List<GameSessionPlayerDto> Players { get; set; } = new List<GameSessionPlayerDto>();

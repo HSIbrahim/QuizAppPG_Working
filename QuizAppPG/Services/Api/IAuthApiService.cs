@@ -1,6 +1,4 @@
-﻿using QuizAppPG.DTOs; // Corrected namespace: AuthResponseDto, LoginDto, RegisterDto
-
-namespace QuizAppPG.Services.Api
+﻿namespace QuizAppPG.Services.Api
 {
     public interface IAuthApiService
     {

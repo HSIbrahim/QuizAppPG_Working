@@ -1,19 +1,11 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Use QuizAppPG.DTOs for DTOs
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
-using QuizAppPG.Utilities; // For DifficultyLevel enum
 using System.Collections.ObjectModel;
-using System.Linq; // For FirstOrDefault
 
 namespace QuizAppPG.ViewModels.Leaderboard
 {
     public partial class LeaderboardViewModel : BaseViewModel
     {
         private readonly ILeaderboardApiService _leaderboardApiService;
-        private readonly IQuizApiService _quizApiService; // Needed to get categories for category leaderboard
-        // _dialogService, _navigationService, _secureStorageService are inherited
+        private readonly IQuizApiService _quizApiService;
 
         [ObservableProperty]
         private ObservableCollection<LeaderboardEntryDto> leaderboardEntries = new();
@@ -22,7 +14,7 @@ namespace QuizAppPG.ViewModels.Leaderboard
         private ObservableCollection<QuizCategoryDto> categories = new();
 
         [ObservableProperty]
-        private QuizCategoryDto? selectedCategory; // Made nullable
+        private QuizCategoryDto? selectedCategory;
 
         [ObservableProperty]
         private bool isGlobalSelected = true;
@@ -39,8 +31,8 @@ namespace QuizAppPG.ViewModels.Leaderboard
             _quizApiService = quizApiService;
             Title = "Topplistor";
 
-            _ = LoadCategoriesAsync(); // Load categories on init. Use `_ =` to suppress warning.
-            _ = LoadGlobalLeaderboardAsync(); // Load global leaderboard by default. Use `_ =` to suppress warning.
+            _ = LoadCategoriesAsync();
+            _ = LoadGlobalLeaderboardAsync();
         }
 
         private async Task LoadCategoriesAsync()
@@ -54,12 +46,12 @@ namespace QuizAppPG.ViewModels.Leaderboard
                 if (result.IsSuccess && result.Data != null)
                 {
                     Categories.Clear();
-                    Categories.Add(new QuizCategoryDto { Id = 0, Name = "Global", Description = "Totala poäng" }); // Add a "Global" option
+                    Categories.Add(new QuizCategoryDto { Id = 0, Name = "Global", Description = "Totala poäng" });
                     foreach (var category in result.Data)
                     {
                         Categories.Add(category);
                     }
-                    SelectedCategory = Categories.FirstOrDefault(); // Select "Global" by default
+                    SelectedCategory = Categories.FirstOrDefault();
                 }
                 else
                 {
@@ -85,9 +77,9 @@ namespace QuizAppPG.ViewModels.Leaderboard
             LeaderboardEntries.Clear();
             try
             {
-                if (SelectedCategory == null) return; // Should not happen if initialized properly
+                if (SelectedCategory == null) return;
 
-                if (SelectedCategory.Id == 0) // "Global" category selected
+                if (SelectedCategory.Id == 0)
                 {
                     var result = await _leaderboardApiService.GetGlobalLeaderboardAsync();
                     if (result.IsSuccess && result.Data != null)
@@ -102,7 +94,7 @@ namespace QuizAppPG.ViewModels.Leaderboard
                         await _dialogService.ShowAlertAsync("Fel", result.ErrorMessage ?? "Kude inte ladda den globala topplistan.");
                     }
                 }
-                else // Specific category selected
+                else
                 {
                     var result = await _leaderboardApiService.GetCategoryLeaderboardAsync(SelectedCategory.Id);
                     if (result.IsSuccess && result.Data != null)
@@ -131,17 +123,17 @@ namespace QuizAppPG.ViewModels.Leaderboard
         [RelayCommand]
         private async Task LoadGlobalLeaderboardAsync()
         {
-            SelectedCategory = Categories.FirstOrDefault(c => c.Id == 0); // Select the "Global" category if available
+            SelectedCategory = Categories.FirstOrDefault(c => c.Id == 0);
             IsGlobalSelected = true;
             await LoadLeaderboardAsync();
         }
 
-        partial void OnSelectedCategoryChanged(QuizCategoryDto? value) // ***FIXED: Made `value` nullable to prevent CS8611 warning***
+        partial void OnSelectedCategoryChanged(QuizCategoryDto? value)
         {
             if (value != null)
             {
                 IsGlobalSelected = (value.Id == 0);
-                _ = LoadLeaderboardAsync(); // Reload leaderboard when category changes. Use `_ =` to suppress warning.
+                _ = LoadLeaderboardAsync();
             }
         }
     }

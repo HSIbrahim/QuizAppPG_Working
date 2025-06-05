@@ -1,18 +1,17 @@
-﻿// Services/Local/ISecureStorageService.cs
-namespace QuizAppPG.Services.Local
+﻿namespace QuizAppPG.Services.Local
 {
     public interface ISecureStorageService
     {
         Task SaveTokenAsync(string token);
-        Task<string?> GetTokenAsync(); // Corrected return type to nullable
+        Task<string?> GetTokenAsync();
         void RemoveToken();
 
         Task SaveUserIdAsync(string userId);
-        Task<string?> GetUserIdAsync(); // Corrected return type to nullable
+        Task<string?> GetUserIdAsync();
         void RemoveUserId();
 
         Task SaveUsernameAsync(string username);
-        Task<string?> GetUsernameAsync(); // Corrected return type to nullable
+        Task<string?> GetUsernameAsync(); 
         void ClearAll();
     }
 }

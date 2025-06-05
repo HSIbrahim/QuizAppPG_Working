@@ -1,8 +1,4 @@
-﻿using QuizAppPG.DTOs; // Corrected namespace: CreateGameSessionDto, GameSessionDetailsDto, ServiceResult
-using System; // For Guid
-using System.Threading.Tasks; // For Task
-
-namespace QuizAppPG.Services.Api
+﻿namespace QuizAppPG.Services.Api
 {
     public interface IGameApiService
     {

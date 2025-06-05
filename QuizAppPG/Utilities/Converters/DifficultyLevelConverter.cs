@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace QuizAppPG.Utilities.Converters
 {
@@ -7,7 +6,7 @@ namespace QuizAppPG.Utilities.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value is DifficultyLevel difficultyLevel) // DifficultyLevel should now be found
+            if (value is DifficultyLevel difficultyLevel)
             {
                 return difficultyLevel switch
                 {
@@ -24,7 +23,7 @@ namespace QuizAppPG.Utilities.Converters
         {
             if (value is string stringValue)
             {
-                if (Enum.TryParse(typeof(DifficultyLevel), stringValue, true, out var result)) // DifficultyLevel should now be found
+                if (Enum.TryParse(typeof(DifficultyLevel), stringValue, true, out var result))
                 {
                     return (DifficultyLevel)result;
                 }

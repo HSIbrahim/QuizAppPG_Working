@@ -1,9 +1,4 @@
-﻿using QuizAppPG.DTOs; // Corrected namespace: UserProfileDto, UpdateProfileDto, ChangePasswordDto, ErrorDto, ServiceResult
-using QuizAppPG.Services.Local;
-using System.Net.Http; // For HttpMethod, HttpClient
-using System.Collections.Generic; // For List
-
-namespace QuizAppPG.Services.Api
+﻿namespace QuizAppPG.Services.Api
 {
     public class UserApiService : BaseApiService, IUserApiService
     {
@@ -12,31 +7,26 @@ namespace QuizAppPG.Services.Api
 
         public async Task<ServiceResult<UserProfileDto>> GetUserProfileAsync()
         {
-            // Corrected: Calls SendApiRequestAsync with ONE generic type argument <UserProfileDto>
             return await SendApiRequestAsync<UserProfileDto>(HttpMethod.Get, "api/User/profile");
         }
 
         public async Task<ServiceResult<UserProfileDto>> GetUserProfileByUsernameAsync(string username)
         {
-            // Corrected: Calls SendApiRequestAsync with ONE generic type argument <UserProfileDto>
             return await SendApiRequestAsync<UserProfileDto>(HttpMethod.Get, $"api/User/{username}");
         }
 
         public async Task<ServiceResult<List<UserProfileDto>>> SearchUsersAsync(string query)
         {
-            // Corrected: Calls SendApiRequestAsync with ONE generic type argument <List<UserProfileDto>>
             return await SendApiRequestAsync<List<UserProfileDto>>(HttpMethod.Get, $"api/User/search?query={query}");
         }
 
         public async Task<ServiceResult> UpdateUserProfileAsync(UpdateProfileDto updateDto)
         {
-            // Corrected: Calls non-generic SendApiRequestAsync
             return await SendApiRequestAsync(HttpMethod.Patch, "api/User/profile", updateDto);
         }
 
         public async Task<ServiceResult> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            // Corrected: Calls non-generic SendApiRequestAsync
             return await SendApiRequestAsync(HttpMethod.Post, "api/User/change-password", changePasswordDto);
         }
     }

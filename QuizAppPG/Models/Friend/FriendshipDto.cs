@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations; // Added
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace QuizAppPG.DTOs // Namespace is DTOs
+namespace QuizAppPG.DTOs 
 {
     public class FriendRequestDto
     {
@@ -13,6 +13,6 @@ namespace QuizAppPG.DTOs // Namespace is DTOs
         public string UserId { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
         public bool IsAccepted { get; set; }
-        public bool IsSender { get; set; } // Indikerar om den aktuella användaren skickade förfrågan
+        public bool IsSender { get; set; } 
     }
 }

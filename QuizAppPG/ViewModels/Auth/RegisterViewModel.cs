@@ -1,37 +1,30 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using QuizAppPG.DTOs; // Corrected: Using QuizAppPG.DTOs for DTOs like RegisterDto
-using QuizAppPG.Services.Api;
-using QuizAppPG.Services.Local; // For IDialogService, INavigationService, ISecureStorageService
-
 namespace QuizAppPG.ViewModels.Auth
 {
-    public partial class RegisterViewModel : BaseViewModel // Ensure `partial` and inherits `BaseViewModel`
+    public partial class RegisterViewModel : BaseViewModel
     {
         private readonly IAuthApiService _authApiService;
-        // _dialogService, _navigationService, and _secureStorageService are inherited from BaseViewModel
 
         [ObservableProperty]
-        private string username = string.Empty; // Initialized to prevent CS8618
+        private string username = string.Empty;
 
         [ObservableProperty]
-        private string email = string.Empty; // Initialized to prevent CS8618
+        private string email = string.Empty;
 
         [ObservableProperty]
-        private string password = string.Empty; // Initialized to prevent CS8618
+        private string password = string.Empty;
 
         [ObservableProperty]
-        private string confirmPassword = string.Empty; // Initialized to prevent CS8618
+        private string confirmPassword = string.Empty;
 
         public RegisterViewModel(
             IAuthApiService authApiService,
             IDialogService dialogService,
             INavigationService navigationService,
-            ISecureStorageService secureStorageService) // <<< ADD THIS PARAMETER
-            : base(navigationService, dialogService, secureStorageService) // <<< PASS THIS PARAMETER
+            ISecureStorageService secureStorageService)
+            : base(navigationService, dialogService, secureStorageService) 
         {
             _authApiService = authApiService;
-            Title = "Registrera"; // Title is a property of BaseViewModel
+            Title = "Registrera";
         }
 
         [RelayCommand]
@@ -60,7 +53,7 @@ namespace QuizAppPG.ViewModels.Auth
                 if (response.IsSuccess)
                 {
                     await _dialogService.ShowAlertAsync("Framgång", "Registrering lyckades! Du kan nu logga in.");
-                    await _navigationService.PopAsync(); // Go back to login page
+                    await _navigationService.PopAsync();
                 }
                 else
                 {

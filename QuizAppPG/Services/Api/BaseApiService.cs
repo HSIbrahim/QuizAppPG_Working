@@ -1,9 +1,5 @@
-﻿using QuizAppPG.Services.Local;
-using QuizAppPG.Utilities; // For Constants
-using QuizAppPG.DTOs;     // For ErrorDto and ServiceResult
-using System.Net.Http.Json; // For JsonContent.Create and ReadFromJsonAsync
-using System.Net;         // For HttpStatusCode
-using System;             // For Uri
+﻿using System.Net.Http.Json; 
+using System.Net; 
 
 namespace QuizAppPG.Services.Api
 {
@@ -16,18 +12,15 @@ namespace QuizAppPG.Services.Api
         {
             _httpClient = httpClient;
             _secureStorageService = secureStorageService;
-            // Initialize HttpClient base address once
             if (_httpClient.BaseAddress == null)
             {
                 _httpClient.BaseAddress = new Uri(Constants.BackendUrl);
             }
         }
-
         protected async Task<string?> GetAuthTokenAsync()
         {
             return await _secureStorageService.GetTokenAsync();
         }
-
         protected async Task AddAuthHeader(HttpRequestMessage request)
         {
             var token = await GetAuthTokenAsync();
@@ -36,9 +29,6 @@ namespace QuizAppPG.Services.Api
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             }
         }
-
-        // Generic method for API requests that expect a specific TResponse
-        // THIS METHOD HAS ONLY ONE GENERIC TYPE PARAMETER: TResponse
         protected async Task<ServiceResult<TResponse>> SendApiRequestAsync<TResponse>(HttpMethod method, string url, object? data = null)
         {
             var request = new HttpRequestMessage(method, url);
@@ -53,7 +43,6 @@ namespace QuizAppPG.Services.Api
 
             if (response.IsSuccessStatusCode)
             {
-                // Successful response: deserialize and return success result
                 TResponse? resultData = await response.Content.ReadFromJsonAsync<TResponse>();
                 if (resultData == null)
                 {
@@ -63,7 +52,6 @@ namespace QuizAppPG.Services.Api
             }
             else
             {
-                // Unsuccessful response: try to read error details
                 string errorMessage = $"Fel vid anrop till {url}. Statuskod: {response.StatusCode}";
                 string? errorDetails = null;
 
@@ -78,12 +66,9 @@ namespace QuizAppPG.Services.Api
                 }
                 catch (Exception ex)
                 {
-                    // Log or handle deserialization error
                     Console.WriteLine($"Kunde inte läsa felrespons som ErrorDto: {ex.Message}");
                     errorMessage = $"Fel: {response.StatusCode}. Kunde inte tolka felmeddelande från servern.";
                 }
-
-                // Special handling for 401 Unauthorized if needed
                 if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     errorMessage = errorMessage.Contains("Ogiltigt användarnamn eller lösenord")
@@ -94,9 +79,6 @@ namespace QuizAppPG.Services.Api
                 return ServiceResult<TResponse>.Failure(errorMessage, errorDetails);
             }
         }
-
-        // Generic method for API requests that do NOT expect response data
-        // THIS METHOD HAS NO GENERIC TYPE PARAMETERS
         protected async Task<ServiceResult> SendApiRequestAsync(HttpMethod method, string url, object? data = null)
         {
             var request = new HttpRequestMessage(method, url);
@@ -115,7 +97,6 @@ namespace QuizAppPG.Services.Api
             }
             else
             {
-                // Unsuccessful response: try to read error details
                 string errorMessage = $"Fel vid anrop till {url}. Statuskod: {response.StatusCode}";
                 string? errorDetails = null;
 
